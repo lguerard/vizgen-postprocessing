@@ -49,9 +49,9 @@ def cellpose_polygons_masks(images: ImageSet, segmentation_properties: Dict,
         return np.zeros((image.shape[0],) + image.shape[1:-1])
 
     if properties.custom_weights:
-        model = models.CellposeModel(gpu=False, pretrained_model=properties.custom_weights, net_avg=False)
+        model = models.CellposeModel(gpu=True, pretrained_model=properties.custom_weights, net_avg=False)
     else:
-        model = models.Cellpose(gpu=False, model_type=properties.model, net_avg=False)
+        model = models.Cellpose(gpu=True, model_type=properties.model, net_avg=False)
 
     to_segment_z = list(set(range(image.shape[0])).difference(empty_z_levels))
     mask = model.eval(
