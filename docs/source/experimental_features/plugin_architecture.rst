@@ -130,6 +130,9 @@ shows how this module is imported and used. This module contains the actual Cell
         else:
             model = models.Cellpose(gpu=True, model_type=properties.model, net_avg=False)
 
+        print("GPU is set to True")
+        sys.exit(0)
+
         to_segment_z = list(set(range(image.shape[0])).difference(empty_z_levels))
         mask = model.eval(
             image[to_segment_z, ...],
