@@ -315,6 +315,7 @@ class SegmentationResult:
         # For each pair of overlapping cells, resolve the conflict
         depricated_entity_ids = []
         log.set_verbose(True)
+        log.info(log.is_verbose())
         iterate = log.show_progress if log_progress else lambda x: x
 
         # Union the large overlap Entities
@@ -323,7 +324,7 @@ class SegmentationResult:
             # Get the slice of the dataframe for each entity
             pl = list(problem)
             entity_id_left, entity_id_right = pl[0], pl[1]
-            log.info(f'Left: {entity_id_left}, Right: {entity_id_right}')
+            
 
             # If either cell is in the depricated id list, ignore the overlap.
             # The entity union / drop process may drop a cell that should be retained.
@@ -344,9 +345,11 @@ class SegmentationResult:
                 if volume_left > volume_right:
                     self._union_entities(left.df, right.df)
                     depricated_entity_ids.append(entity_id_right)
+                    log.info(f'Left: {entity_id_left}, Right: {entity_id_right}, keeping left')
                 else:
                     self._union_entities(right.df, left.df)
                     depricated_entity_ids.append(entity_id_left)
+                    log.info(f'Left: {entity_id_left}, Right: {entity_id_right}, keeping right')
 
         # With large overlaps resolved, re-identify problem sets and trim overlaps
         self._drop_by_entity_id(depricated_entity_ids)
