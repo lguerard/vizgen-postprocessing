@@ -360,6 +360,8 @@ class SegmentationResult:
             left = SegmentationResult(dataframe=self.df.loc[self.df[self.cell_id_field] == entity_id_left])
             right = SegmentationResult(dataframe=self.df.loc[self.df[self.cell_id_field] == entity_id_right])
 
+            log.info(f'Left: {entity_id_left}, Right: {entity_id_right}')
+
             # Find seperate and overlapping volumes of the cells
             volume_left = left.get_volume()
             volume_right = right.get_volume()
