@@ -307,7 +307,7 @@ class SegmentationResult:
                 depricated_entity_ids.append(entity_id)
         self._drop_by_entity_id(depricated_entity_ids)
 
-    def make_non_overlapping_polys(self, min_distance: int = 2, min_area: int = 100, log_progress: bool = False):
+    def make_non_overlapping_polys(self, min_distance: int = 2, min_area: int = 100, log_progress: bool = True):
         # Find cells that have any overlapping area
         problem_sets = self._find_overlapping_entities()
         log.info(f'Found {len(problem_sets)} overlaps')
@@ -318,6 +318,7 @@ class SegmentationResult:
 
         # Union the large overlap Entities
         for problem in iterate(problem_sets):
+            log.info(f'Here')
             # Get the slice of the dataframe for each entity
             pl = list(problem)
             entity_id_left, entity_id_right = pl[0], pl[1]
